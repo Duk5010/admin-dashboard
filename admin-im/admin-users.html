@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Users Dashboard- La Consolacion Jewelry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+      body {
+        background: linear-gradient(
+          135deg,
+          #f8fafc 0%,
+          #e0f2fe 50%,
+          #e8eaf6 100%
+        );
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      .gradient-emerald {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      }
+      .gradient-purple {
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+      }
+      .gradient-deep-blue {
+        background: linear-gradient(135deg, #1f488a 0%, #123366 100%);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen overflow-hidden">
+    <!-- Header -->
+    <header class="glass sticky top-0 z-50 px-6 py-4 border-b border-gray-200">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-3">
+            <img
+              src="/images/logo.png"
+              alt="LA Consolacion Logo"
+              class="h-12 w-auto"
+            />
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <span class="text-sm text-gray-600"
+            >Dashboard | Welcome {{username}}</span
+          >
+          <div
+            class="w-8 h-8 gradient-bg rounded-full flex items-center justify-center"
+          >
+            <i data-lucide="user" class="w-4 h-4 text-white"></i>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="flex h-[calc(100vh-80px)] overflow-hidden">
+      <!-- Sidebar -->
+      <aside
+        class="fixed top-[80px] left-0 w-72 h-[calc(100vh-80px)] glass p-6 border-r border-gray-200 overflow-y-auto"
+      >
+        <nav class="space-y-2">
+          <!-- Overview -->
+          <a
+            href="admin-overview.html"
+            class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left text-gray-600 hover:bg-gray-100 transition-all duration-200"
+          >
+            <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+            <span class="font-medium">Overview</span>
+          </a>
+          <!-- Orders -->
+          <a
+            href="admin-orders.html"
+            class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left text-gray-600 hover:bg-gray-100 transition-all duration-200"
+          >
+            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+            <span class="font-medium">Orders</span>
+          </a>
+
+          <!-- Inventory -->
+          <a
+            href="admin-inventory.html"
+            class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left text-gray-600 hover:bg-gray-100 transition-all duration-200"
+          >
+            <i data-lucide="package" class="w-5 h-5"></i>
+            <span class="font-medium">Inventory</span>
+          </a>
+
+          <!-- Users -->
+          <a
+            href="admin-users.html"
+            class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left gradient-deep-blue text-white shadow-lg"
+          >
+            <i data-lucide="user" class="w-5 h-5"></i>
+            <span class="font-medium">Users</span>
+          </a>
+          <!-- Logs -->
+          <a
+            href="admin-logs.html"
+            class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left text-gray-600 hover:bg-gray-100 transition-all duration-200"
+          >
+            <i data-lucide="activity" class="w-5 h-5"></i>
+            <span class="font-medium">Logs</span>
+          </a>
+        </nav>
+
+        <!-- Log Out -->
+        <div>
+          <button
+            class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 transition-all duration-200 mt-4"
+          >
+            <i data-lucide="log-out" class="w-5 h-5"></i>
+            <span class="font-medium">Log Out</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content: User Management -->
+      <main class="flex-1 p-8 ml-72 overflow-y-auto h-[calc(100vh-80px)]">
+        <h1 class="text-4xl font-bold mb-6" style="color: #629aea">Users</h1>
+        <div class="glass p-6 rounded-2xl mb-8">
+          <!-- Search and Filter -->
+          <div
+            class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4"
+          >
+            <!-- Search Bar -->
+            <div class="relative w-full sm:w-1/2">
+              <input
+                type="text"
+                placeholder="Search users..."
+                class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                id="userSearch"
+              />
+              <i
+                data-lucide="search"
+                class="absolute left-3 top-2.5 w-4 h-4 text-gray-400"
+              ></i>
+            </div>
+
+            <!-- Role Filter -->
+            <div>
+              <select
+                id="roleFilter"
+                class="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+              >
+                <option value="">All Roles</option>
+                <option value="Admin">Admin</option>
+                <option value="User">User</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- User Table -->
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200" id="userTable">
+              <thead class="bg-white sticky top-0">
+                <tr>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                  >
+                    Full Name
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                  >
+                    Role
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                  >
+                    Email
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                  >
+                    Joined
+                  </th>
+                  <th
+                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase"
+                  >
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                id="userTableBody"
+                class="bg-white divide-y divide-gray-100 text-sm"
+              >
+                <!--JS Data-->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      lucide.createIcons();
+
+      const users = [
+        {
+          name: "Whitney Francis",
+          role: "Admin",
+          email: "whitney@example.com",
+          joined: "June 18, 2025",
+        },
+        {
+          name: "Floyd Miles",
+          role: "User",
+          email: "floyd@example.com",
+          joined: "June 20, 2025",
+        },
+        {
+          name: "Lindsay Walton",
+          role: "User",
+          email: "lindsay@example.com",
+          joined: "June 19, 2025",
+        },
+        {
+          name: "Shiori Morisaka",
+          role: "Admin",
+          email: "shiorimorisaka@gmail.com",
+          joined: "June 10, 2025",
+        },
+        {
+          name: "Emmanuel Cabizares",
+          role: "Admin",
+          email: "iman123@gmail.com",
+          joined: "June 10, 2025",
+        },
+        {
+          name: "Kenzho Suarez",
+          role: "Admin",
+          email: "kenzhosuarez123@yahoo.com",
+          joined: "June 10, 2025",
+        },
+        {
+          name: "Duk",
+          role: "Admin",
+          email: "dakdekdikdokduk123@gmail.com",
+          joined: "June 10, 2025",
+        },
+      ];
+
+      const tbody = document.getElementById("userTableBody");
+      const searchInput = document.getElementById("userSearch");
+      const roleFilter = document.getElementById("roleFilter");
+
+      function renderUsers(data) {
+        tbody.innerHTML = "";
+        data.forEach((user) => {
+          const row = document.createElement("tr");
+          row.setAttribute("data-role", user.role);
+          row.setAttribute("data-name", user.name);
+
+          row.innerHTML = `
+        <td class="px-6 py-4 text-gray-800">${user.name}</td>
+        <td class="px-6 py-4 text-gray-600">${user.role}</td>
+        <td class="px-6 py-4 text-gray-600">${user.email}</td>
+        <td class="px-6 py-4 text-gray-500">${user.joined}</td>
+        <td class="px-6 py-4 text-right space-x-2">
+          <button class="text-indigo-600 hover:underline">Edit</button>
+          <button class="text-red-600 hover:underline">Delete</button>
+        </td>
+      `;
+          tbody.appendChild(row);
+        });
+      }
+
+      function applyFilters() {
+        const searchText = searchInput.value.toLowerCase();
+        const selectedRole = roleFilter.value;
+
+        const filtered = users.filter((user) => {
+          const matchesName = user.name.toLowerCase().includes(searchText);
+          const matchesEmail = user.email.toLowerCase().includes(searchText);
+          const matchesRole = selectedRole ? user.role === selectedRole : true;
+          return (matchesName || matchesEmail) && matchesRole;
+        });
+
+        renderUsers(filtered);
+      }
+
+      searchInput.addEventListener("input", applyFilters);
+      roleFilter.addEventListener("change", applyFilters);
+
+      // Initial render
+      document.addEventListener("DOMContentLoaded", () => {
+        renderUsers(users);
+      });
+    </script>
+  </body>
+</html>
